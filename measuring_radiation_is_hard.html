@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<title>Measuring Radiation is Hard</title>
+	<meta name="description" content="This document describes the challenges and strategies in measuring radiation accurately." />
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica:ital@0;1&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+	<style type="text/css">
+		html {
+			--line-height: 1.5rem;
+			-moz-osx-font-smoothing: grayscale;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		html {
+			--font-size: calc(var(--line-height) * 0.8);
+			--letter-spacing: calc(var(--font-size) * 0.01);
+			--strong-color: #1a114e;
+			--strong-size: calc(var(--font-size) * 1.05);
+
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			overflow-x: hidden;
+		}
+
+		body {
+			background-color: #f8f5ed;
+			color: #362c74ea;
+			font-family: "IM Fell Double Pica", "Times New Roman", serif;
+			font-size: var(--font-size);
+			font-style: normal;
+			font-weight: 400;
+			line-height: var(--line-height);
+			letter-spacing: var(--letter-spacing);
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+		}
+
+		main {
+			background-color: #f8f5ed;
+			background-image: repeating-linear-gradient(0deg, transparent, transparent 22px, rgba(0, 0, 0, 0.05) 25px), repeating-linear-gradient(90deg, transparent, transparent 22px, rgba(0, 0, 0, 0.05) 25px);
+			max-width: 70rem;
+			width: 95.5%;
+			padding: var(--line-height);
+			align-items: center;
+			display: flex;
+			flex-direction: column;
+			border-left: 2px solid #3d21f541;
+			border-right: 2px solid #3d21f541;
+			box-sizing: border-box;
+		}
+
+		h1,
+		h2,
+		h3 {
+			color: var(--strong-color);
+			text-align: center;
+			line-height: normal;
+			font-weight: 500;
+		}
+
+		strong {
+			color: var(--strong-color);
+			font-size: var(--strong-size);
+			font-weight: 500;
+
+		}
+
+		p:not(.lead) {
+			width: 100%;
+		}
+
+		ul {
+			width: 100%;
+			margin-top: 0;
+		}
+
+		li {
+			margin-bottom: 0.5em;
+		}
+
+		@media screen and (max-width: 620px) {
+
+			math,
+			mjx-math {
+				font-size: 1.1rem !important;
+			}
+		}
+
+		@media screen and (max-width: 500px) {
+
+			math,
+			mjx-math {
+				font-size: 1rem !important;
+			}
+		}
+
+		mtext,
+		mjx-mtext {
+			color: #3c693c
+		}
+
+		mi.function,
+		mjx-mi.function {
+			font-weight: 800;
+		}
+
+		mn,
+		mjx-mn {
+			font-style: italic;
+		}
+
+		mo,
+		mjx-mo {
+			color: #929292;
+		}
+
+		p.interjection {
+			margin-bottom: 0;
+		}
+
+		p.interjection+ul>li {
+			list-style-type: square;
+			margin-bottom: 0;
+		}
+
+		/* 
+		FIXME: The tooltip is making the width of the page larger than the viewport in small widths. Steps to reproduce: 
+		  1. Open the page in a small window (e.g. 400px wide)
+		  2. Scroll the page to reveal the unexpected empty space on the right.
+		  3. Observe there is no horizontal scrollbar.
+		*/
+		/*
+		[data-tooltip] {
+			position: relative;
+		}
+
+		[data-tooltip]::after {
+			cursor: help;
+			display: block;
+			position: absolute;
+			width: 400px;
+			left: 100%;
+			top: 40px;
+			border: 1px dotted #666666;
+			background-color: #ffffff;
+			color: #000000;
+			content: attr(data-tooltip);
+			padding: 0.5em 1em;
+			z-index: 10;
+			opacity: 0;
+			pointer-events: none;
+			transform: translateX(40px);
+			transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		[data-tooltip]:hover::after {
+			opacity: 1;
+			transform: translateX(0);
+			transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+		*/
+		#geiger-counter-simulation {
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+		}
+		.work-in-progress {
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%) rotate(-30deg);
+			z-index: 0;
+			font-size: 5vw;
+			color: #ff2222;
+			font-weight: 900;
+			text-align: center;
+			opacity: 0.12;
+			pointer-events: none;
+			user-select: none;
+			letter-spacing: 0.05em;
+			white-space: nowrap;
+			font-family: Arial, Helvetica, "Noto Sans", sans-serif;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<h1>Measuring Radiation is Hard</h1>
+
+		<p class="lead">Yes, it is. Let's work it out.</p>
+
+		<h2>The Problem</h2>
+
+		<p>The difficulty in measuring radiation comes from a multitude of different factors. Here are just a few of them:</p>
+
+		<ul>
+			<li><strong>Physical properties of radiation</strong>: Different types of radiation (alpha, beta, gamma, neutron, etc.) interact with matter in different ways. The energy levels of the radiation can vary widely, affecting how deeply they penetrate materials.</li>
+
+			<li><strong>Detector characteristics</strong>: The type, design, and calibration of the detector (Geiger-Müller, scintillation, semiconductor) can significantly influence the measurement. Variation in detector sensitivity, energy response, and dead time introduce both systematic and random errors.</li>
+
+			<li><strong>Environmental factors</strong>: Temperature, humidity, atmospheric pressure, and electromagnetic fields can affect detector performance. Natural and artificial background radiation can mask or interfere with measurements, especially when measuring weak radiation sources.</li>
+
+			<li><strong>Spatial geometry</strong>: The positioning, distance, dimensions, and layout of the radiation source, detector, and the existence of any intervening materials can significantly alter the measured signal.</li>
+
+			<li><strong>Temporal variations</strong>: If measuring changing radiation fields, the rate of change can impact the accuracy of measurements.</li>
+
+			<li><strong>Statistical nature of radiation</strong>: Radiation emission and detection are inherently probabilistic processes that require specific methods when measuring and interpreting data.</li>
+		</ul>
+
+		<h2>The objective</h2>
+
+		<p>This document describes a <em>good enough</em> strategy for making measurements of radiation sources in a way that maximizes accuracy, precision, without sacrificing too much of the sanity of the operator.</p>
+
+		<p>The document is targeted to serve those radiation enthusiasts who aspire to a little more than categorizing their precious collections of deadly rocks as "hot" and "spicy".</p>
+
+		<p>The document's scope has to be significantly narrowed down in order to fulfill its purpose. Therefore we have to put some limitations and make some assumptions and simplifications:</p>
+
+		<ul>
+			<li>We are measuring <strong>gamma radiation</strong> only. It is the most penetrating type of radiation, and doesn't suffer that much from shielding by air or light materials as the other types do.</li>
+
+			<li>We are using a <strong>Geiger-Müller detector</strong>, because they are cheap. We assume that the detector is properly calibrated and the sensitivity and other parameters of the tube are known beforehand. The detector must to be able to display the number of clicks, not just dose rate.</li>
+
+			<li>We approximate the form of the radiation source with a simple geometric shape: sphere, cylinder, cube, etc. Considering the measurements are made from relatively short distances, on weak sources, with cheap detectors, a point source model is not suitable, as it introduces significant errors when estimating the strength of the source.</li>
+
+			<li>We must use <strong>☠</strong><em>statistics</em><strong>☠</strong> and <strong>☠</strong><em>integral calculus</em><strong>☠</strong>.</li>
+		</ul>
+
+		<h2>Statistics</h2>
+
+		<h3>Poisson Distribution</h3>
+
+		<p>Radioactive decay is inherently a random process. In a given time interval, some atoms will decay. Unless we're involved in the development of nuclear reactor or a bomb, we can assume that the chance of a nucleus decaying is independent of the other nuclei. We can model the behavior of a single unstable nucleus as a <a href="https://en.wikipedia.org/wiki/Bernoulli_trial" target="_blank" rel="noopener">Bernoulli trial</a>, i.e. a random experiment that has, in a given period of time, two possible outcomes: "decay" and "no decay". The chance of finding the nucleus whole at the end of the interval is given by the probability of decay <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>d</mi></msub></math>.</p>
+
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+			<mrow>
+				<mi>X</mi>
+				<mo>&#x223C;</mo>
+				<mi class="function">Bernoulli</mi>
+				<mrow>
+					<mo>(</mo>
+						<msub><mi>P</mi><mi>d</mi></msub>
+					<mo>)</mo>
+				</mrow>
+				<mo>&#x2261;</mo>
+				<mo>{</mo>
+				<mtable columnalign="left" rowspacing=".2em">
+					<mtr>
+						<mtd>
+							<mstyle mathsize="0.85em">
+								<mi>P</mi><mo>(</mo><mi>X</mi><mo>=</mo><mtext>'decay'</mtext><mo>)</mo>
+								<mo>=</mo>
+								<msub><mi>P</mi><mi>d</mi></msub>
+							</mstyle>
+						</mtd>
+					</mtr>
+					<mtr>
+						<mtd>
+							<mstyle mathsize="0.85em">
+								<mi>P</mi><mo>(</mo><mi>X</mi><mo>=</mo><mtext>'no decay'</mtext><mo>)</mo>
+								<mo>=</mo>
+								<mn>1</mn>
+								<mo>&#x2212;</mo>
+								<msub><mi>P</mi><mi>d</mi></msub>
+							</mstyle>
+						</mtd>
+					</mtr>
+				</mtable>
+			</mrow>
+		</math>
+
+		<p>In a sample of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math> unstable nuclei, we can consider the decay of each nucleus as an independent Bernoulli trial. Taking the total number of decays in the sample over the time interval is also called a <a href="https://en.wikipedia.org/wiki/Binomial_process" target="_blank" rel="noopener">Binomial process</a>.</p>
+
+		<p>If we take <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math> multiple times, we will find that its distribution is the <a href="https://en.wikipedia.org/wiki/Binomial_distribution" target="_blank" rel="noopener">Binomial distribution</a>. A special case of the Binomial distribution is the <a href="https://en.wikipedia.org/wiki/Poisson_distribution" target="_blank" rel="noopener">Poisson distribution</a>, derived by taking the limit as the number of trials approaches to infinity and the probability of success approaches zero. Considering a real radiation source, of course, neither the number of nuclei is infinite, nor the rate of decay is zero, however, unless you are playing with a rock that will melt your face off, the Poisson distribution is a very good approximation.</p>
+
+		<math>
+			<mrow>
+				<mi>Y</mi>
+				<mo>=</mo>
+				<munderover displaystyle="true">
+					<mo stretchy="true">&sum;</mo>
+					<mrow>
+						<mi>i</mi>
+						<mo>=</mo>
+						<mn>1</mn>
+					</mrow>
+					<mi>n</mi>
+				</munderover>
+				<msub>
+					<mi>X</mi>
+					<mi>i</mi>
+				</msub>
+				<mo>&#x223C;</mo>
+				<mi class="function">Binomial</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>n</mi>
+					<mo>,</mo>
+					<msub>
+						<mi>P</mi>
+						<mi>d</mi>
+					</msub>
+					<mo>)</mo>
+				</mrow>
+				<mo>&#x2248;</mo>
+				<mi class="function">Poisson</mi>
+				<mrow>
+					<mo>(</mo>
+					<msub>
+						<mi>&#x3BB;</mi>
+						<mi>d</mi>
+					</msub>
+					<mo>=</mo>
+					<mi>n</mi>
+					<msub>
+						<mi>P</mi>
+						<mi>d</mi>
+					</msub>
+					<mo>)</mo>
+			</mrow>
+		</math>
+
+		<p>In our case, the Poisson distribution expresses the probability of a given number of nuclei decaying in a fixed interval of time, given a known average decay rate. The Poisson distribution does not directly depend on the total number of nuclei present, making it particularly useful for modeling a radioactive source as a <a href="https://en.wikipedia.org/wiki/Poisson_point_process" target="_blank" rel="noopener">Poisson process</a> (i.e. a process that generates random events and obeys the Poisson distribution). For practical purposes, the average rate of decays <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>&#x3BB;</mi><mi>d</mi></msub></math>, is tangible and finite, and can be put in a calculator!</p>
+
+		<p>Another useful feature of the Poisson processes is the concept of thinning. Thinning refers to the idea that if you have a Poisson process and you randomly pick some of the events produced by it by a rate of <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>f</mi></msub></math>, the resulting process is yet another Poisson process, albeit with lower intensity (i.e. a lower average rate of events). This is very close to what happens in the detector. Assuming the detector is stationary relative to the source, it will detect a constant tiny fraction of all of the decays.</p>
+
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+			<mrow>
+				<mi>Z</mi>
+				<mo>&#x223C;</mo>
+				<msub>
+					<mi>P</mi><mi>f</mi>
+				</msub>
+				<mo>&#x22C5;</mo>
+				<mi class="function">Poisson</mi>
+				<mrow>
+					<mo>(</mo>
+					<msub>
+						<mi>&#x3BB;</mi>
+						<mi>d</mi>
+					</msub>
+					<mo>)</mo>
+				</mrow>
+				<mo>=</mo>
+				<mi class="function">Poisson</mi>
+				<mrow>
+					<mo>(</mo>
+					<msub>
+						<mi>P</mi><mi>f</mi>
+					</msub>
+					<msub>
+						<mi>&#x3BB;</mi>
+						<mi>d</mi>
+					</msub>
+					<mo>)</mo>
+				</mrow>
+				<mo>=</mo>
+				<mi class="function">Poisson</mi>
+				<mrow>
+					<mo>(</mo>
+					<msub>
+						<mi>&#x3BB;</mi>
+						<mi>e</mi>
+					</msub>
+					<mo>)</mo>
+				</mrow>
+				<mo>,</mo>
+			</mrow>
+		</math>
+
+		<p class="interjection">where we define <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>&#x3BB;</mi><mi>e</mi></msub></math> as the average rate of detected events.</p>
+
+		<p>As we now modelled the detector as a Poisson process, we can actually build a simple yet effective simulator of a Geiger-Müller counter. We could use the Poisson function and run it I loop to generate the number of clicks in each time interval, but in order to count clicks and measure time, we need to do make the time intervals as small as possible. In fact, if we choose a time interval that matches the <span data-tooltip="The time needed for the Geiger-Müller tube to return to its relaxed state, after detecting a &#x3BB; ray or a particle. Only then the tube will be able to register new events. This puts a limit on the total number of events a Geiger counter can detect in a given time period.">dead time</span> of the detector, we can make the simulation even more realistic. However, this would require us to run the Poisson function a huge number of times, which is not very efficient. Instead, we can sacrifice some precision and use a related function that returns the random inter-arrival times of the random events. The time between events in a Poisson process follows an <a href="https://en.wikipedia.org/wiki/Exponential_distribution" target="_blank" rel="noopener">Exponential distribution</a>, which is defined by the average rate of detected events <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>&#x3BB;</mi><mi>e</mi></msub></math>.</p>
+
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+			<mrow>
+				<mi>T</mi>
+				<mo>&#x223C;</mo>
+				<mi class="function">Exponential</mi>
+				<mrow>
+					<mo>(</mo>
+					<msub>
+						<mi>&#x3BB;</mi>
+						<mi>e</mi>
+					</msub>
+					<mo>)</mo>
+				</mrow>
+				<mo>=</mo>
+				<mrow>
+					<mo>-</mo>
+					<mfrac displaystyle="true">
+					<mn>1</mn>
+					<mi>&#x03BB;</mi>
+					</mfrac>
+					<mo>&#x2062;</mo>
+					<mi class="function">ln</mi>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>-</mo>
+					<mi>U</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>,</mo>
+					<mspace width="1em"/>
+					<mi>U</mi>
+					<mo>&#x223C;</mo>
+					<mi class="function">Uniform</mi>
+					<mrow displaystyle="false">
+						<mo>(</mo>
+						<mn>0</mn>
+						<mo>,</mo>
+						<mn>1</mn>
+						<mo>)</mo>
+					</mrow>	
+				</mrow>
+			</mrow>
+		</math>
+
+		<p></p>
+
+		<section id="geiger-counter-simulation" aria-label="A simple Geiger counter simulation">
+			<style>
+				#indicator {
+					transition: fill 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+				}
+
+				#geiger-counter-simulation {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					height: 100%;
+					width: 100%;
+					flex-direction: row;
+					user-select: none;
+					-webkit-user-select: none;
+					-moz-user-select: none;
+					-ms-user-select: none;
+				}
+
+				@media (max-width: 1024px) {
+					#geiger-counter-simulation {
+						flex-direction: column;
+					}
+
+					#geiger-counter-simulation svg {
+						margin-right: 0;
+						margin-bottom: 2em;
+						width: 80vw;
+						max-width: 350px;
+					}
+
+					#geiger-counter-simulation pre {
+						max-width: 95vw;
+						margin-right: 0;
+						padding-left: 0.5em;
+					}
+				}
+
+				#geiger-counter-simulation svg {
+					flex-shrink: 0;
+					width: 400px;
+					height: auto;
+					margin-right: 2em;
+				}
+
+				#geiger-counter-simulation svg rect {
+					filter: drop-shadow(6px 6px 0 #927000) drop-shadow(12px 12px 1px #00000020) drop-shadow(14px 14px 4px #00000020) drop-shadow(16px 16px 6px #00000020) drop-shadow(18px 18px 8px #00000020);
+					-webkit-filter: drop-shadow(6px 6px 0 #927000) drop-shadow(12px 12px 1px #00000020) drop-shadow(14px 14px 4px #00000020) drop-shadow(16px 16px 6px #00000020) drop-shadow(18px 18px 8px #00000020);
+				}
+
+				#geiger-counter-simulation pre {
+					background-color: #f0f0f0;
+					/* border: 1px solid #ccc; */
+					/* border-radius: 8px; */
+					box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+					font-size: 0.7em;
+					line-height: 1.2em;
+					margin-right: 1em;
+					overflow: auto;
+					padding-left: 2em;
+					width: 100%;
+					max-width: 600px;
+				}
+
+				#geiger-counter-simulation pre code {
+					background-color: #f0f0f0;
+					padding: 0;
+					margin: 0;
+				}
+
+				#plus-button:hover>circle,
+				#minus-button:hover>circle {
+					fill: #99ccff;
+				}
+
+				#plus-button:active>circle,
+				#minus-button:active>circle {
+					fill: #3399ff;
+				}
+			</style>
+
+			<svg viewBox="0 0 250 200" style="display:block;margin:auto;background:transparent;">
+				<rect x="15" y="15" width="190" height="130" rx="28" fill="#ffe066" stroke="#d4a200" stroke-width="4" />
+				<circle id="indicator" cx="55" cy="50" r="10" fill="#4b2e13" stroke="#2d1a0b" stroke-width="3" />
+				<text id="power-button" x="165" y="58" text-anchor="middle" font-size="28px" fill="#333" font-family="Arial, sans-serif" style="cursor:pointer;" stroke="#2d1a0b">⏻</text>
+				<text x="110" y="125" text-anchor="middle" font-size="72px" fill="#222" font-family="Arial, sans-serif">☢</text>
+				<!-- <g id="minus-button" style="cursor:pointer;">
+					<circle cx="55" cy="175" r="10" fill="#ffffff" stroke="#2d1a0b" stroke-width="3"/>
+					<text x="55" y="182.5" text-anchor="middle" font-size="28px" fill="#333" font-family="Arial, sans-serif" stroke="#2d1a0b">-</text>
+				</g> -->
+				<text id="geiger-cpm" x="110" y="180" text-anchor="middle" font-size="14px" fill="#222" font-family="Arial, sans-serif">&#x223C; 120 CPM</text>
+				<!-- <g id="plus-button" style="cursor:pointer;">
+					<circle cx="170" cy="175" r="10" fill="#ffffff" stroke="#2d1a0b" stroke-width="3"/>
+					<text x="170" y="184.5" text-anchor="middle" font-size="28px" fill="#333" font-family="Arial, sans-serif" stroke="#2d1a0b">+</text>
+				</g> -->
+			</svg>
+
+			<pre>
+				<code>
+rng = np.random.default_rng()
+
+def interarrival_times(rate_per_sec):
+	"""Generator of exponential inter-arrival times."""
+	while True:
+		yield rng.exponential(1 / rate_per_sec)
+
+def geiger_counter(rate_per_sec):
+	"""A Geiger counter simulation."""
+	times = interarrival_times(rate_per_sec)
+	for dt in times:
+		time.sleep(dt)
+		click()
+		flash()
+
+geiger_counter(2.0)  # average 2 clicks per second
+				</code>
+			</pre>
+
+			<script>
+				const indicator = document.getElementById("indicator");
+				const powerButton = document.getElementById("power-button");
+				const plusButton = document.getElementById("plus-button");
+				const minusButton = document.getElementById("minus-button");
+				const geigerCpm = document.getElementById("geiger-cpm");
+				const audio = new (window.AudioContext || window.webkitAudioContext)()
+
+				let isOn = false;
+				let timeout;
+				let geiger;
+				let lambdaE = 2;
+
+				function* detectionIntervals() {
+					while (true) {
+						const interval = -Math.log(1 - Math.random()) / lambdaE;
+						yield interval * 1000; // convert to milliseconds
+					}
+				}
+
+				function flash() {
+					if (!isOn) return;
+
+					indicator.setAttribute("fill", "#ff0000");
+					setTimeout(() => {
+						indicator.setAttribute("fill", "#4b2e13");
+					}, 100);
+				}
+
+				async function click() {
+					await audio.resume();
+					const osc = audio.createOscillator();
+					const gain = audio.createGain();
+					osc.type = "square";
+					osc.frequency.value = 3000;
+					osc.connect(gain).connect(audio.destination);
+					gain.gain.setValueAtTime(0, audio.currentTime);
+					gain.gain.linearRampToValueAtTime(2, audio.currentTime + 0.002);
+					gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 0.03);
+					osc.start();
+					osc.stop(audio.currentTime + 0.07);
+				}
+
+				async function simulateGeigerCounter() {
+					const intervals = detectionIntervals();
+					for (const interval of intervals) {
+						if (!isOn) break;
+						await new Promise(resolve => timeout = setTimeout(resolve, interval));
+						flash();
+						await click();	// The await for the click sound is introducing a small delay, i.e an error in the simulation of a precise Poisson process, however without it the sound starts choppy and unpleasant.
+					}
+				}
+
+				async function togglePower() {
+					if (isOn) {
+						isOn = false;
+						timeout && clearTimeout(timeout);
+						powerButton.setAttribute("fill", "#000000");
+					} else {
+						isOn = true;
+						powerButton.setAttribute("fill", "#3399ff");
+						geiger = simulateGeigerCounter();
+					}
+				}
+
+				async function updateCps(delta) {
+					lambdaE += delta;
+					geigerCpm.textContent = `~ ${Math.round(lambdaE * 60)} CPM`;
+				}
+
+				powerButton.addEventListener("click", togglePower);
+				// plusButton.addEventListener("click", () => updateCps(1));
+				// minusButton.addEventListener("click", () => updateCps(-1));
+			</script>
+		</section>
+
+		<h3>Counting Statistics</h3>
+
+	</main>
+	<div class="work-in-progress">WORK IN PROGRESS</div>
+</body>
+
+</html>
