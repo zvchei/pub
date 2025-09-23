@@ -214,7 +214,7 @@
 		<h1>Measuring Radiation is Hard</h1>
 
 		<p class="lead">
-			Radiation is born of Chaos. To get a hold of it and one must plunge into a world where randomness reigns and certainty is always out of reach. Every observation is clouded by chance, and our instruments can only offer glimpses into the underlying disorder.
+			Radiation is born of Chaos. To get a hold of it one must plunge into a world where randomness reigns and certainty is impossible. Every observation is clouded by chance, and our instruments can only offer mere glimpses into the underlying disorder.
 		</p>
 
 		<h2>The Problem</h2>
@@ -248,7 +248,7 @@
 
 			<li>We use a <strong>Geiger-Müller detector</strong> because it is cheap. We assume that the detector is properly calibrated and that the sensitivity and other tube parameters are known beforehand. The detector must be able to display the number of clicks, not just the dose rate.</li>
 
-			<li>We approximate the form of the radiation source with a simple geometric shape: sphere, cylinder, cube, etc. Considering that the measurements are made at relatively short distances on weak sources with inexpensive detectors, a point‑source model is not suitable, as it introduces significant errors when estimating the strength of the source.</li>
+			<li>We approximate the form of the radiation source with a simple geometric shape: sphere, cylinder, cube, etc. Considering that the measurements are made at relatively short distances on weak sources with inexpensive detectors, a point source model is often not suitable, as it introduces significant errors when estimating the strength of the source.</li>
 
 			<li>We must use <strong>☠</strong><em>statistics</em><strong>☠</strong> and <strong>☠</strong><em>integral calculus</em><strong>☠</strong>.</li>
 		</ul>
@@ -613,7 +613,7 @@ geiger_counter(2.0)  # average 2 clicks per second
 						if (!isOn) break;
 						await new Promise(resolve => timeout = setTimeout(resolve, interval));
 						flash();
-						await click();	// The await for the click sound is introducing a small delay, i.e., an error in the simulation of a precise Poisson process; however, without it the sound starts choppy and unpleasant.
+						await click();	// The await for the click sound is introducing a small delay, i.e. an error in the simulation of a precise Poisson process; however, without it the sound starts choppy and unpleasant.
 					}
 				}
 
