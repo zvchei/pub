@@ -213,40 +213,42 @@
 	<main>
 		<h1>Measuring Radiation is Hard</h1>
 
-		<p class="lead">Yes, it is. Let's work it out.</p>
+		<p class="lead">
+			Radiation is born of Chaos. To get a hold of it and one must plunge into a world where randomness reigns and certainty is always out of reach. Every observation is clouded by chance, and our instruments can only offer glimpses into the underlying disorder.
+		</p>
 
 		<h2>The Problem</h2>
 
-		<p>The difficulty in measuring radiation comes from a multitude of different factors. Here are just a few of them:</p>
+		<p>The difficulty in measuring radiation arises from a multitude of factors. Here are just a few of them:</p>
 
 		<ul>
 			<li><strong>Physical properties of radiation</strong>: Different types of radiation (alpha, beta, gamma, neutron, etc.) interact with matter in different ways. The energy levels of the radiation can vary widely, affecting how deeply they penetrate materials.</li>
 
-			<li><strong>Detector characteristics</strong>: The type, design, and calibration of the detector (Geiger-Müller, scintillation, semiconductor) can significantly influence the measurement. Variation in detector sensitivity, energy response, and dead time introduce both systematic and random errors.</li>
+			<li><strong>Detector characteristics</strong>: The type, design, and calibration of the detector (Geiger-Müller, scintillation, semiconductor) can significantly influence the measurement. Variations in detector sensitivity, energy response, and dead time introduce both systematic and random errors.</li>
 
 			<li><strong>Environmental factors</strong>: Temperature, humidity, atmospheric pressure, and electromagnetic fields can affect detector performance. Natural and artificial background radiation can mask or interfere with measurements, especially when measuring weak radiation sources.</li>
 
-			<li><strong>Spatial geometry</strong>: The positioning, distance, dimensions, and layout of the radiation source, detector, and the existence of any intervening materials can significantly alter the measured signal.</li>
+			<li><strong>Spatial geometry</strong>: The positioning, distance, dimensions, and layout of the radiation source, detector, and any intervening materials can significantly alter the measured signal.</li>
 
-			<li><strong>Temporal variations</strong>: If measuring changing radiation fields, the rate of change can impact the accuracy of measurements.</li>
+			<li><strong>Temporal variations</strong>: The rate of change of the intensity of radiation can impact the accuracy of measurements.</li>
 
 			<li><strong>Statistical nature of radiation</strong>: Radiation emission and detection are inherently probabilistic processes that require specific methods when measuring and interpreting data.</li>
 		</ul>
 
-		<h2>The objective</h2>
+		<h2>The Objective</h2>
 
-		<p>This document describes a <em>good enough</em> strategy for making measurements of radiation sources in a way that maximizes accuracy, precision, without sacrificing too much of the sanity of the operator.</p>
+		<p>This document describes a <em>good‑enough</em> strategy for measuring radiation sources that maximizes accuracy and precision without sacrificing too much of the operator's sanity.</p>
 
-		<p>The document is targeted to serve those radiation enthusiasts who aspire to a little more than categorizing their precious collections of deadly rocks as "hot" and "spicy".</p>
+		<p>This document is targeted at radiation enthusiasts who aspire to more than merely categorizing their precious collections of deadly rocks as "hot" or "spicy".</p>
 
-		<p>The document's scope has to be significantly narrowed down in order to fulfill its purpose. Therefore we have to put some limitations and make some assumptions and simplifications:</p>
+		<p>The document's scope must be significantly narrowed to fulfill its purpose. Therefore, we impose some limitations and make some assumptions and simplifications:</p>
 
 		<ul>
-			<li>We are measuring <strong>gamma radiation</strong> only. It is the most penetrating type of radiation, and doesn't suffer that much from shielding by air or light materials as the other types do.</li>
+			<li>We are measuring <strong>gamma radiation</strong> specifically. It is the most penetrating type of radiation and doesn't suffer as much from shielding by air or light materials as the other types do.</li>
 
-			<li>We are using a <strong>Geiger-Müller detector</strong>, because they are cheap. We assume that the detector is properly calibrated and the sensitivity and other parameters of the tube are known beforehand. The detector must to be able to display the number of clicks, not just dose rate.</li>
+			<li>We use a <strong>Geiger-Müller detector</strong> because it is cheap. We assume that the detector is properly calibrated and that the sensitivity and other tube parameters are known beforehand. The detector must be able to display the number of clicks, not just the dose rate.</li>
 
-			<li>We approximate the form of the radiation source with a simple geometric shape: sphere, cylinder, cube, etc. Considering the measurements are made from relatively short distances, on weak sources, with cheap detectors, a point source model is not suitable, as it introduces significant errors when estimating the strength of the source.</li>
+			<li>We approximate the form of the radiation source with a simple geometric shape: sphere, cylinder, cube, etc. Considering that the measurements are made at relatively short distances on weak sources with inexpensive detectors, a point‑source model is not suitable, as it introduces significant errors when estimating the strength of the source.</li>
 
 			<li>We must use <strong>☠</strong><em>statistics</em><strong>☠</strong> and <strong>☠</strong><em>integral calculus</em><strong>☠</strong>.</li>
 		</ul>
@@ -255,7 +257,7 @@
 
 		<h3>Poisson Distribution</h3>
 
-		<p>Radioactive decay is inherently a random process. In a given time interval, some atoms will decay. Unless we're involved in the development of nuclear reactor or a bomb, we can assume that the chance of a nucleus decaying is independent of the other nuclei. We can model the behavior of a single unstable nucleus as a <a href="https://en.wikipedia.org/wiki/Bernoulli_trial" target="_blank" rel="noopener">Bernoulli trial</a>, i.e. a random experiment that has, in a given period of time, two possible outcomes: "decay" and "no decay". The chance of finding the nucleus whole at the end of the interval is given by the probability of decay <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>d</mi></msub></math>.</p>
+		<p>Radioactive decay is inherently a random process. In a given time interval, some atoms will decay. Unless we're involved in the development of a nuclear reactor or a bomb, we can assume that the chance of a nucleus decaying is independent of the other nuclei. We can model the behavior of a single unstable nucleus as a <a href="https://en.wikipedia.org/wiki/Bernoulli_trial" target="_blank" rel="noopener">Bernoulli trial</a>, i.e., a random experiment that has, in a given period of time, two possible outcomes: "decay" and "no decay". The chance that the nucleus decays during the interval is given by the probability of decay <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>d</mi></msub></math>.</p>
 
 		<math xmlns="http://www.w3.org/1998/Math/MathML">
 			<mrow>
@@ -294,9 +296,9 @@
 			</mrow>
 		</math>
 
-		<p>In a sample of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math> unstable nuclei, we can consider the decay of each nucleus as an independent Bernoulli trial. Taking the total number of decays in the sample over the time interval is also called a <a href="https://en.wikipedia.org/wiki/Binomial_process" target="_blank" rel="noopener">Binomial process</a>.</p>
+		<p>In a sample of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math> unstable nuclei, we can consider the decay of each nucleus as an independent Bernoulli trial. The total number of decays in the sample over the time interval is a <a href="https://en.wikipedia.org/wiki/Binomial_process" target="_blank" rel="noopener">Binomial process</a>.</p>
 
-		<p>If we take <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math> multiple times, we will find that its distribution is the <a href="https://en.wikipedia.org/wiki/Binomial_distribution" target="_blank" rel="noopener">Binomial distribution</a>. A special case of the Binomial distribution is the <a href="https://en.wikipedia.org/wiki/Poisson_distribution" target="_blank" rel="noopener">Poisson distribution</a>, derived by taking the limit as the number of trials approaches to infinity and the probability of success approaches zero. Considering a real radiation source, of course, neither the number of nuclei is infinite, nor the rate of decay is zero, however, unless you are playing with a rock that will melt your face off, the Poisson distribution is a very good approximation.</p>
+		<p>If we repeat this experiment many times, we will find that the distribution of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math> is the <a href="https://en.wikipedia.org/wiki/Binomial_distribution" target="_blank" rel="noopener">Binomial distribution</a>. A special case of the Binomial distribution is the <a href="https://en.wikipedia.org/wiki/Poisson_distribution" target="_blank" rel="noopener">Poisson distribution</a>, derived by taking the limit as the number of trials approaches infinity and the probability of success approaches zero. Of course, in a real radiation source, neither the number of nuclei is infinite nor the rate of decay is zero; however, unless you are playing with a rock that will melt your face off, the Poisson distribution is a very good approximation.</p>
 
 		<math>
 			<mrow>
@@ -345,9 +347,9 @@
 			</mrow>
 		</math>
 
-		<p>In our case, the Poisson distribution expresses the probability of a given number of nuclei decaying in a fixed interval of time, given a known average decay rate. The Poisson distribution does not directly depend on the total number of nuclei present, making it particularly useful for modeling a radioactive source as a <a href="https://en.wikipedia.org/wiki/Poisson_point_process" target="_blank" rel="noopener">Poisson process</a> (i.e. a process that generates random events and obeys the Poisson distribution). For practical purposes, the average rate of decays <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>&#x3BB;</mi><mi>d</mi></msub></math>, is tangible and finite, and can be put in a calculator!</p>
+		<p>In our case, the Poisson distribution expresses the probability of a given number of nuclei decaying in a fixed interval of time, given a known average decay rate. The Poisson distribution does not directly depend on the total number of nuclei present, making it particularly useful for modeling a radioactive source as a <a href="https://en.wikipedia.org/wiki/Poisson_point_process" target="_blank" rel="noopener">Poisson process</a> (i.e., a process that generates random events and obeys the Poisson distribution). For practical purposes, the average decay rate <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>&#x3BB;</mi><mi>d</mi></msub></math> is finite and can be plugged into a calculator!</p>
 
-		<p>Another useful feature of the Poisson processes is the concept of thinning. Thinning refers to the idea that if you have a Poisson process and you randomly pick some of the events produced by it by a rate of <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>f</mi></msub></math>, the resulting process is yet another Poisson process, albeit with lower intensity (i.e. a lower average rate of events). This is very close to what happens in the detector. Assuming the detector is stationary relative to the source, it will detect a constant tiny fraction of all of the decays.</p>
+		<p>Another useful feature of a Poisson process is thinning. Thinning refers to the idea that if you select only some of the events, independently, with some probability <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>f</mi></msub></math>, the resulting distribution and associated process is another Poisson process, albeit with lower intensity (i.e., a lower average rate of events). This is very close to what happens in a real detector. Assuming the detector is stationary relative to the source, it will detect a tiny, constant fraction of all emmissions.</p>
 
 		<math xmlns="http://www.w3.org/1998/Math/MathML">
 			<mrow>
@@ -395,7 +397,7 @@
 
 		<p class="interjection">where we define <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>&#x3BB;</mi><mi>e</mi></msub></math> as the average rate of detected events.</p>
 
-		<p>As we now modelled the detector as a Poisson process, we can actually build a simple yet effective simulator of a Geiger-Müller counter. We could use the Poisson function and run it I loop to generate the number of clicks in each time interval, but in order to count clicks and measure time, we need to do make the time intervals as small as possible. In fact, if we choose a time interval that matches the <span data-tooltip="The time needed for the Geiger-Müller tube to return to its relaxed state, after detecting a &#x3BB; ray or a particle. Only then the tube will be able to register new events. This puts a limit on the total number of events a Geiger counter can detect in a given time period.">dead time</span> of the detector, we can make the simulation even more realistic. However, this would require us to run the Poisson function a huge number of times, which is not very efficient. Instead, we can sacrifice some precision and use a related function that returns the random inter-arrival times of the random events. The time between events in a Poisson process follows an <a href="https://en.wikipedia.org/wiki/Exponential_distribution" target="_blank" rel="noopener">Exponential distribution</a>, which is defined by the average rate of detected events <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>&#x3BB;</mi><mi>e</mi></msub></math>.</p>
+		<p>Now that we have modeled the detector as a Poisson process, we can build a simple yet effective simulator of a Geiger-Müller counter. We could use the Poisson function and run it in a loop to generate the number of clicks in each time interval, but to count clicks and measure time, we need to make the time intervals as small as possible. In fact, if we choose a time interval that matches the <span data-tooltip="The time needed for the Geiger-Müller tube to return to its relaxed state after detecting a &#x3B3; ray or a particle. Only then will the tube be able to register new events. This puts a limit on the total number of events a Geiger counter can detect in a given time period.">dead time</span> of the detector, we can make the simulation even more realistic. However, this would require us to run the Poisson function a huge number of times, which is not very efficient. Instead, we can use a related function that returns the random interarrival times between events. The time between events in a Poisson process follows the <a href="https://en.wikipedia.org/wiki/Exponential_distribution" target="_blank" rel="noopener">Exponential distribution</a> with parameter <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>&#x3BB;</mi><mi>e</mi></msub></math>.</p>
 
 		<math xmlns="http://www.w3.org/1998/Math/MathML">
 			<mrow>
@@ -414,8 +416,8 @@
 				<mrow>
 					<mo>-</mo>
 					<mfrac displaystyle="true">
-					<mn>1</mn>
-					<mi>&#x03BB;</mi>
+						<mn>1</mn>
+						<msub><mi>&#x03BB;</mi><mi>e</mi></msub>
 					</mfrac>
 					<mo>&#x2062;</mo>
 					<mi class="function">ln</mi>
@@ -611,7 +613,7 @@ geiger_counter(2.0)  # average 2 clicks per second
 						if (!isOn) break;
 						await new Promise(resolve => timeout = setTimeout(resolve, interval));
 						flash();
-						await click();	// The await for the click sound is introducing a small delay, i.e an error in the simulation of a precise Poisson process, however without it the sound starts choppy and unpleasant.
+						await click();	// The await for the click sound is introducing a small delay, i.e., an error in the simulation of a precise Poisson process; however, without it the sound starts choppy and unpleasant.
 					}
 				}
 
